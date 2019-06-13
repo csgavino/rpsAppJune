@@ -7,52 +7,56 @@ describe('play function', () => {
     })
 
     describe('win scenarios', () => {
-        it('paper vs. rock', () => {
-            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
+        describe('p1 wins', () => {
+            it('rock vs. scissors', () => {
+                const observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
-            requests.play('paper', 'rock', observer)
+                requests.play('rock', 'scissors', observer)
 
-            expect(observer.p1Wins).toHaveBeenCalled()
+                expect(observer.p1Wins).toHaveBeenCalled()
+            })
+
+            it('paper vs. rock', () => {
+                const observer = jasmine.createSpyObj('observer', ['p1Wins'])
+
+                requests.play('paper', 'rock', observer)
+
+                expect(observer.p1Wins).toHaveBeenCalled()
+            })
+
+            it('scissors vs. paper', () => {
+                const observer = jasmine.createSpyObj('observer', ['p1Wins'])
+
+                requests.play('scissors', 'paper', observer)
+
+                expect(observer.p1Wins).toHaveBeenCalled()
+            })
         })
 
-        it('rock vs. paper', () => {
-            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
+        describe('p2 wins', () => {
+            it('rock vs. paper', () => {
+                const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
-            requests.play('rock', 'paper', observer)
+                requests.play('rock', 'paper', observer)
 
-            expect(observer.p2Wins).toHaveBeenCalled()
-        })
+                expect(observer.p2Wins).toHaveBeenCalled()
+            })
 
-        it('rock vs. scissors', () => {
-            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
+            it('paper vs. scissors', () => {
+                const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
-            requests.play('rock', 'scissors', observer)
+                requests.play('paper', 'scissors', observer)
 
-            expect(observer.p1Wins).toHaveBeenCalled()
-        })
+                expect(observer.p2Wins).toHaveBeenCalled()
+            })
 
-        it('scissors vs. rock', () => {
-            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
+            it('scissors vs. rock', () => {
+                const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
-            requests.play('scissors', 'rock', observer)
+                requests.play('scissors', 'rock', observer)
 
-            expect(observer.p2Wins).toHaveBeenCalled()
-        })
-
-        it('scissors vs. paper', () => {
-            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
-
-            requests.play('scissors', 'paper', observer)
-
-            expect(observer.p1Wins).toHaveBeenCalled()
-        })
-
-        it('paper vs. scissors', () => {
-            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
-
-            requests.play('paper', 'scissors', observer)
-
-            expect(observer.p2Wins).toHaveBeenCalled()
+                expect(observer.p2Wins).toHaveBeenCalled()
+            })
         })
     })
 
