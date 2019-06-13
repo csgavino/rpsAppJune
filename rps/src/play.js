@@ -12,7 +12,9 @@ const THROW = {
 
 class Requests {
     play(p1, p2, observer) {
-        if (p1 === THROW.ROCK && p2 === THROW.SCISSORS ||
+        if (p1 === p2) {
+            observer.draw()
+        } else if (p1 === THROW.ROCK && p2 === THROW.SCISSORS ||
             p1 === THROW.PAPER && p2 === THROW.ROCK ||
             p1 === THROW.SCISSORS && p2 === THROW.PAPER) {
             observer.p1Wins()

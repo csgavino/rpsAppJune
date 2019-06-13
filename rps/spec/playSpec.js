@@ -53,4 +53,31 @@ describe('play function', () => {
             expect(observer.p2Wins).toHaveBeenCalled()
         })
     })
+
+    describe('draw scenarios', () => {
+        it('rock vs. rock', () => {
+            const observer = jasmine.createSpyObj("observer", ['draw'])
+
+            new Requests().play('rock', 'rock', observer)
+
+            expect(observer.draw).toHaveBeenCalled()
+        })
+
+        it('paper vs. paper', () => {
+            const observer = jasmine.createSpyObj("observer", ['draw'])
+
+            new Requests().play('paper', 'paper', observer)
+
+            expect(observer.draw).toHaveBeenCalled()
+        })
+
+        it('scissors vs. scissors', () => {
+            const observer = jasmine.createSpyObj("observer", ['draw'])
+
+            new Requests().play('scissors', 'scissors', observer)
+
+            expect(observer.draw).toHaveBeenCalled()
+        })
+
+    })
 })
