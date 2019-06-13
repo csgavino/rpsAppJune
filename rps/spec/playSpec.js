@@ -6,7 +6,7 @@ describe('play function', () => {
 
     describe('win scenarios', () => {
         it('paper vs. rock', () => {
-            const observer = jasmine.createSpyObj("observer", ['p1Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
             new Requests().play('paper', 'rock', observer)
 
@@ -14,7 +14,7 @@ describe('play function', () => {
         })
 
         it('rock vs. paper', () => {
-            const observer = jasmine.createSpyObj("observer", ['p2Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
             new Requests().play('rock', 'paper', observer)
 
@@ -22,7 +22,7 @@ describe('play function', () => {
         })
 
         it('rock vs. scissors', () => {
-            const observer = jasmine.createSpyObj("observer", ['p1Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
             new Requests().play('rock', 'scissors', observer)
 
@@ -30,7 +30,7 @@ describe('play function', () => {
         })
 
         it('scissors vs. rock', () => {
-            const observer = jasmine.createSpyObj("observer", ['p2Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
             new Requests().play('scissors', 'rock', observer)
 
@@ -38,7 +38,7 @@ describe('play function', () => {
         })
 
         it('scissors vs. paper', () => {
-            const observer = jasmine.createSpyObj("observer", ['p1Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p1Wins'])
 
             new Requests().play('scissors', 'paper', observer)
 
@@ -46,7 +46,7 @@ describe('play function', () => {
         })
 
         it('paper vs. scissors', () => {
-            const observer = jasmine.createSpyObj("observer", ['p2Wins'])
+            const observer = jasmine.createSpyObj('observer', ['p2Wins'])
 
             new Requests().play('paper', 'scissors', observer)
 
@@ -56,7 +56,7 @@ describe('play function', () => {
 
     describe('draw scenarios', () => {
         it('rock vs. rock', () => {
-            const observer = jasmine.createSpyObj("observer", ['draw'])
+            const observer = jasmine.createSpyObj('observer', ['draw'])
 
             new Requests().play('rock', 'rock', observer)
 
@@ -64,7 +64,7 @@ describe('play function', () => {
         })
 
         it('paper vs. paper', () => {
-            const observer = jasmine.createSpyObj("observer", ['draw'])
+            const observer = jasmine.createSpyObj('observer', ['draw'])
 
             new Requests().play('paper', 'paper', observer)
 
@@ -72,12 +72,45 @@ describe('play function', () => {
         })
 
         it('scissors vs. scissors', () => {
-            const observer = jasmine.createSpyObj("observer", ['draw'])
+            const observer = jasmine.createSpyObj('observer', ['draw'])
 
             new Requests().play('scissors', 'scissors', observer)
 
             expect(observer.draw).toHaveBeenCalled()
         })
+    })
 
+    describe('error scenarios', () => {
+        it('null vs. null', () => {
+            const observer = jasmine.createSpyObj('observer', ['invalid'])
+
+            new Requests().play(null, null, observer)
+
+            expect(observer.invalid).toHaveBeenCalled()
+        })
+
+        it('null vs. inoshishi', () => {
+            const observer = jasmine.createSpyObj('observer', ['invalid'])
+
+            new Requests().play(null, 'inoshishi', observer)
+
+            expect(observer.invalid).toHaveBeenCalled()
+        })
+
+        it('inoshishi vs. null', () => {
+            const observer = jasmine.createSpyObj('observer', ['invalid'])
+
+            new Requests().play('inoshishi', null, observer)
+
+            expect(observer.invalid).toHaveBeenCalled()
+        })
+
+        it('inoshishi vs. inoshishi', () => {
+            const observer = jasmine.createSpyObj('observer', ['invalid'])
+
+            new Requests().play('inoshishi', 'inoshishi', observer)
+
+            expect(observer.invalid).toHaveBeenCalled()
+        })
     })
 })

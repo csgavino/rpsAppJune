@@ -10,9 +10,14 @@ const THROW = {
     SCISSORS: 'scissors'
 }
 
+const THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS]
+
 class Requests {
     play(p1, p2, observer) {
-        if (p1 === p2) {
+        if (THROWS.includes(p1) === false ||
+            THROWS.includes(p2) === false) {
+            observer.invalid()
+        } else if (p1 === p2) {
             observer.draw()
         } else if (p1 === THROW.ROCK && p2 === THROW.SCISSORS ||
             p1 === THROW.PAPER && p2 === THROW.ROCK ||
