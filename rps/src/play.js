@@ -16,15 +16,15 @@ function PlayRequest(p1, p2, observer, repo) {
     this.process = () => {
         if (eitherInvalid()) {
             observer.invalid()
-            repo.save(p1, p2, 'Invalid')
+            repo.save(p1, p2, 'invalid')
         } else if (isDraw()) {
-            repo.save(p1, p2, 'Draw')
+            repo.save(p1, p2, 'draw')
             observer.draw()
         } else if (p1Wins()) {
-            repo.save(p1, p2, 'Player 1 Wins!')
+            repo.save(p1, p2, 'p1Wins')
             observer.p1Wins()
         } else {
-            repo.save(p1, p2, 'Player 2 Wins!')
+            repo.save(p1, p2, 'p2Wins')
             observer.p2Wins()
         }
     }

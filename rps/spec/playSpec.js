@@ -119,7 +119,7 @@ describe('play function', () => {
             expect(spyRepo.save).toHaveBeenCalledWith(
                 'rock',
                 'scissors',
-                'Player 1 Wins!'
+                'p1Wins'
             );
         })
 
@@ -131,7 +131,7 @@ describe('play function', () => {
             expect(spyRepo.save).toHaveBeenCalledWith(
                 'scissors',
                 'rock',
-                'Player 2 Wins!'
+                'p2Wins'
             );
         })
 
@@ -143,7 +143,7 @@ describe('play function', () => {
             expect(spyRepo.save).toHaveBeenCalledWith(
                 'rock',
                 'rock',
-                'Draw'
+                'draw'
             );
         })
 
@@ -155,7 +155,7 @@ describe('play function', () => {
             expect(spyRepo.save).toHaveBeenCalledWith(
                 'inoshishi',
                 'inoshishi',
-                'Invalid'
+                'invalid'
             );
         })
     })
