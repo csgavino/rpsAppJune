@@ -8,7 +8,8 @@ describe('WebSpec', function () {
 
     beforeEach(() => {
         domFixture = document.createElement('div')
-        document.querySelector('body').appendChild(domFixture)
+        document.querySelector('body')
+            .appendChild(domFixture)
     })
 
     afterEach(() => {
@@ -17,7 +18,7 @@ describe('WebSpec', function () {
 
     it('displays title', () => {
         ReactDOM.render(
-            <PlayForm />,
+            <PlayForm/>,
             domFixture,
         )
 
@@ -25,9 +26,87 @@ describe('WebSpec', function () {
     })
 
     describe('PlayForm', () => {
-        it('displays Player 1 Wins if Requests calls p1_wins', () => {
+        it('displays Invalid Input!', () => {
+            let requestsStub = {
+                play: (p1, p2, observer) => {
+                    observer.invalid()
+                }
+            }
+
             ReactDOM.render(
-                <PlayForm/>,
+                <PlayForm requests={requestsStub}/>,
+                domFixture,
+            )
+
+            expect(domFixture.innerText).not.toContain('Invalid Input')
+
+            document.querySelector('button').click()
+
+            expect(domFixture.innerText).toContain('Invalid Input')
+        })
+
+        it('displays Player 1 Wins!', () => {
+            let requestsStub = {
+                play: (p1, p2, observer) => {
+                    observer.p1Wins()
+                }
+            }
+
+            ReactDOM.render(
+                <PlayForm requests={requestsStub}/>,
+                domFixture,
+            )
+
+            expect(domFixture.innerText).not.toContain('Player 1 Wins!')
+
+            document.querySelector('button').click()
+
+            expect(domFixture.innerText).toContain('Player 1 Wins!')
+        })
+
+        it('displays Player 2 Wins!', () => {
+            let requestsStub = {
+                play: (p1, p2, observer) => {
+                    observer.p2Wins()
+                }
+            }
+
+            ReactDOM.render(
+                <PlayForm requests={requestsStub}/>,
+                domFixture,
+            )
+
+            expect(domFixture.innerText).not.toContain('Player 2 Wins!')
+
+            document.querySelector('button').click()
+
+            expect(domFixture.innerText).toContain('Player 2 Wins!')
+        })
+
+        it('displays Draw!', () => {
+            let requestsStub = {
+                play: (p1, p2, observer) => {
+                    observer.draw()
+                }
+            }
+
+            ReactDOM.render(
+                <PlayForm requests={requestsStub}/>,
+                domFixture,
+            )
+
+            expect(domFixture.innerText).not.toContain('Draw!')
+
+            document.querySelector('button').click()
+
+            expect(domFixture.innerText).toContain('Draw!')
+        })
+
+        it('calls Play with input text', () => {
+            let requestsSpy = jasmine.createSpyObj('observerSpy', ['play'])
+
+            ReactDOM.render(
+                <PlayForm requests={requestsSpy}/>,
                 domFixture,
             )
 
@@ -41,7 +120,11 @@ describe('WebSpec', function () {
 
             document.querySelector('button').click()
 
-            expect(domFixture.innerText).toContain('NOT IMPLEMENTED')
+            expect(requestsSpy.play).toHaveBeenCalledWith(
+                'rock',
+                'paper',
+                jasmine.any(Object)
+            )
         })
     })
 })

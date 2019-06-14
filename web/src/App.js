@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PlayForm from './PlayForm'
+import {Requests} from 'rps/src/play'
 
 class App extends React.Component {
   render(){
-    return <PlayForm />
+    return <PlayForm requests={new Requests()} />
   }
 }
 
