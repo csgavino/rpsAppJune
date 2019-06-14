@@ -64,6 +64,11 @@ export default class PlayForm extends React.Component {
                 <div>{this.state.result}</div>
                 <button id="history" onClick={this.getHistory.bind(this)}>Get history</button>
                 {
+                    this.state.history && this.state.history.length === 0 && (
+                        <p>No game played</p>
+                    )
+                }
+                {
                     this.state.history && this.state.history.map(round => {
                         return <li key="{round}">{round.p1Hand}, {round.p2Hand}, {round.result}</li>
                     })
