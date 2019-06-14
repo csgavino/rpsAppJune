@@ -86,35 +86,27 @@ describe('play function', () => {
         })
     })
 
-    describe('error scenarios', () => {
-        it('null vs. null', () => {
+    describe('invalid scenarios', () => {
+        it('rock vs. invalid', () => {
             const observer = jasmine.createSpyObj('observer', ['invalid'])
 
-            requests.play(null, null, observer)
+            requests.play('rock', Math.random(), observer)
 
             expect(observer.invalid).toHaveBeenCalled()
         })
 
-        it('null vs. inoshishi', () => {
+        it('invalid vs. rock', () => {
             const observer = jasmine.createSpyObj('observer', ['invalid'])
 
-            requests.play(null, 'inoshishi', observer)
+            requests.play(Math.random(), 'rock', observer)
 
             expect(observer.invalid).toHaveBeenCalled()
         })
 
-        it('inoshishi vs. null', () => {
+        it('invalid vs. invalid', () => {
             const observer = jasmine.createSpyObj('observer', ['invalid'])
 
-            requests.play('inoshishi', null, observer)
-
-            expect(observer.invalid).toHaveBeenCalled()
-        })
-
-        it('inoshishi vs. inoshishi', () => {
-            const observer = jasmine.createSpyObj('observer', ['invalid'])
-
-            requests.play('inoshishi', 'inoshishi', observer)
+            requests.play(Math.random(), Math.random(), observer)
 
             expect(observer.invalid).toHaveBeenCalled()
         })

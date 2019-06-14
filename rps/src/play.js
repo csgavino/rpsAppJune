@@ -10,12 +10,12 @@ const THROW = {
     SCISSORS: 'scissors'
 }
 
-const THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS]
+const VALID_THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS]
 
 class Requests {
     play(p1, p2, observer) {
-        if (THROWS.includes(p1) === false ||
-            THROWS.includes(p2) === false) {
+        if (VALID_THROWS.includes(p1) === false ||
+            VALID_THROWS.includes(p2) === false) {
             observer.invalid()
         } else if (p1 === p2) {
             observer.draw()
