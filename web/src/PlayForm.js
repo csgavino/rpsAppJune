@@ -44,14 +44,30 @@ export default class PlayForm extends React.Component {
         })
     }
 
+    getHistory() {
+        this.props.requests.getHistory(this)
+    }
+
+    rounds(rounds) {
+        this.setState(
+            {history: rounds}
+        )
+    }
+
     render() {
         return (
             <div>
                 <h1>RPS App</h1>
                 <input name='player1' onChange={this.onChangeP1Input.bind(this)}/>
                 <input name='player2' onChange={this.onChangeP2Input.bind(this)}/>
-                <button onClick={this.onClickSubmit.bind(this)}>登録</button>
+                <button id="submit" onClick={this.onClickSubmit.bind(this)}>登録</button>
                 <div>{this.state.result}</div>
+                <button id="history" onClick={this.getHistory.bind(this)}>Get history</button>
+                {
+                    this.state.history && this.state.history.map(round => {
+                        return <li key="{round}">{round.p1Hand}, {round.p2Hand}, {round.result}</li>
+                    })
+                }
             </div>
         )
     }

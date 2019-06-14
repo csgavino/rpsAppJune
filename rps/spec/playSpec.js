@@ -3,7 +3,12 @@ const {Requests} = require('../src/play');
 describe('play function', () => {
     let requests
     beforeEach(() => {
-        requests = new Requests()
+        let repoStub = {
+            save: () => {
+
+            }
+        }
+        requests = new Requests(repoStub)
     })
 
     describe('win scenarios', () => {
@@ -86,6 +91,75 @@ describe('play function', () => {
         })
     })
 
+    describe('save', () => {
+        let observerStub;
+
+        beforeEach(() => {
+            observerStub = {
+                invalid: () => {
+
+                },
+                p1Wins: () => {
+
+                },
+                p2Wins: () => {
+
+                },
+                draw: () => {
+
+                }
+            }
+        });
+
+        it('saves p1 wins', () => {
+            let spyRepo = jasmine.createSpyObj('repo', ['save']);
+
+            new Requests(spyRepo).play('rock', 'scissors', observerStub)
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                'rock',
+                'scissors',
+                'Player 1 Wins!'
+            );
+        })
+
+        it('saves p2 wins', () => {
+            let spyRepo = jasmine.createSpyObj('repo', ['save']);
+
+            new Requests(spyRepo).play('scissors', 'rock', observerStub)
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                'scissors',
+                'rock',
+                'Player 2 Wins!'
+            );
+        })
+
+        it('saves draw', () => {
+            let spyRepo = jasmine.createSpyObj('repo', ['save']);
+
+            new Requests(spyRepo).play('rock', 'rock', observerStub)
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                'rock',
+                'rock',
+                'Draw'
+            );
+        })
+
+        it('saves invalid', () => {
+            let spyRepo = jasmine.createSpyObj('repo', ['save']);
+
+            new Requests(spyRepo).play('inoshishi', 'inoshishi', observerStub)
+
+            expect(spyRepo.save).toHaveBeenCalledWith(
+                'inoshishi',
+                'inoshishi',
+                'Invalid'
+            );
+        })
+    })
+
     describe('invalid scenarios', () => {
         it('rock vs. invalid', () => {
             const observerSpy = jasmine.createSpyObj('observerSpy', ['invalid'])
@@ -109,6 +183,33 @@ describe('play function', () => {
             requests.play(Math.random(), Math.random(), observerSpy)
 
             expect(observerSpy.invalid).toHaveBeenCalled()
+        })
+    })
+
+    describe('get history', () => {
+        it('calls rounds', () => {
+            let repoStub = {
+                getRounds: () => [
+                    {
+                        p1Hand: 'rock',
+                        p2Hand: 'scissors',
+                        result: 'Player 1 Wins!'
+                    }
+                ]
+            }
+            let observer = jasmine.createSpyObj('observer', ['rounds'])
+
+
+            new Requests(repoStub).getHistory(observer);
+
+
+            expect(observer.rounds).toHaveBeenCalledWith([
+                {
+                    p1Hand: 'rock',
+                    p2Hand: 'scissors',
+                    result: 'Player 1 Wins!'
+                }
+            ])
         })
     })
 })

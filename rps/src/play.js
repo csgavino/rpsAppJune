@@ -12,15 +12,19 @@ const THROW = {
 
 const VALID_THROWS = [THROW.ROCK, THROW.PAPER, THROW.SCISSORS]
 
-function PlayRequest(p1, p2, observer) {
+function PlayRequest(p1, p2, observer, repo) {
     this.process = () => {
         if (eitherInvalid()) {
             observer.invalid()
+            repo.save(p1, p2, 'Invalid')
         } else if (isDraw()) {
+            repo.save(p1, p2, 'Draw')
             observer.draw()
         } else if (p1Wins()) {
+            repo.save(p1, p2, 'Player 1 Wins!')
             observer.p1Wins()
         } else {
+            repo.save(p1, p2, 'Player 2 Wins!')
             observer.p2Wins()
         }
     }
@@ -30,6 +34,7 @@ function PlayRequest(p1, p2, observer) {
     }
 
     function p1Wins() {
+
         return p1 === THROW.ROCK && p2 === THROW.SCISSORS ||
             p1 === THROW.PAPER && p2 === THROW.ROCK ||
             p1 === THROW.SCISSORS && p2 === THROW.PAPER
@@ -42,8 +47,16 @@ function PlayRequest(p1, p2, observer) {
 }
 
 class Requests {
+    constructor(repo) {
+        this.repo = repo;
+    }
+
     play(p1, p2, observer) {
-        new PlayRequest(p1, p2, observer).process()
+        new PlayRequest(p1, p2, observer, this.repo).process()
+    }
+
+    getHistory(observer) {
+        observer.rounds(this.repo.getRounds());
     }
 }
 
